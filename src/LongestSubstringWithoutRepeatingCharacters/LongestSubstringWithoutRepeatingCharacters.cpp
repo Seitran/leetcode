@@ -10,27 +10,27 @@ public:
         int i;
         int basePos = 0;
         int maxLength = -1;
+        int curLength = 0;
         
-        for (i = 0; i < 256; i++)
-        {
+        for (i = 0; i < 256; i++) {
             pos[i] = -1;
         }
 
-        for(i=0;i<s.length();i++)
-        {
-            if(pos[s[i]]<basePos)
-            {
-                pos[s[i]]=i;
+        for(i = 0; i < s.length(); i++) {
+            if (pos[s[i]] < basePos) {
+                curLength++;
+            } else {
+                if (curLength > maxLength)
+                    maxLength = curLength;
+                curLength = 0;
+                basePos = pos[s[i]] + 1;
             }
-            else 
-            {
-                if(maxLength==-1||i-basePos>maxLength)
-                    maxLength=i-basePos;
-                basePos=pos[s[i]]+1;
-                pos[s[i]]=i;
-            }
+            pos[s[i]] = i;
         }
-        if(s.length()-basePos>maxLength||maxLength==-1) maxLength=s.length()-basePos;
+        
+        if (curLength > maxLength)
+            maxLength = curLength;
+        
         return maxLength;
     }
 };
